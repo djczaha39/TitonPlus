@@ -1,0 +1,17 @@
+name: ${project.artifactId}
+main: com.titongames.titonplus.Main
+version: maven-version-number
+website: ${project.url}
+authors: [SkuLL]
+description: Libations, potent potables and fine smokeables.
+commands:
+  thelm:
+    description: Places block on head!
+    usage: |
+           /<command>
+           Example: /<command> <itemID> - Block helmets! ItemId is any block ID.
+  tsit:
+    description: Makes you or another player sit
+    usage: |
+           /<command>
+           Example: /<command> <player> - Sitting at its best.
