@@ -14,20 +14,18 @@ import java.util.List;
 
 public class Main extends JavaPlugin {
     private PlusListener plistener;
-    public List<Player> sprintPlayers = new ArrayList<Player>();
+    public static final String PLUGIN_NAME = "TitonGuest";
 
     @Override
     public void onDisable() {
-        PluginDescriptionFile pdfFile = this.getDescription();
-        System.out.println(pdfFile.getName() + " version " + pdfFile.getVersion() + " is disabled!!");
+        getLogger().info("Starting " + PLUGIN_NAME);
     }
 
     @Override
     public void onEnable() {
         plistener = new PlusListener(this);
         Bukkit.getPluginManager().registerEvents(plistener, this);
-        PluginDescriptionFile pdfFile = this.getDescription();
-        System.out.println(pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled!!");
+        getLogger().info("Disabling " + PLUGIN_NAME);
     }
 
     // test command, to be removed later
@@ -36,15 +34,15 @@ public class Main extends JavaPlugin {
         String commandName = command.getName().toLowerCase();
 
         // thelm code
-        if (commandName.equalsIgnoreCase("vhelm")) {
+        if (commandName.equalsIgnoreCase("thelm")) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 if (args.length >= 2) {
                     player.sendMessage("Too many arguements!");
                 } else {
-                    int vhelmid = Integer.parseInt(args[0]);
-                    ItemStack vhelmstack = new ItemStack(vhelmid);
-                    player.getInventory().setHelmet(vhelmstack);
+                    int thelmid = Integer.parseInt(args[0]);
+                    ItemStack thelmstack = new ItemStack(thelmid);
+                    player.getInventory().setHelmet(thelmstack);
                     player.sendMessage("You have something on your head. LOL!");
                     return true;
                 }
@@ -54,8 +52,8 @@ public class Main extends JavaPlugin {
         }
 
         // tsit code
-        if (commandName.equalsIgnoreCase("vsit")) {
-            if (sender instanceof Player && sender.hasPermission("voxelplus.vsit")) {
+        if (commandName.equalsIgnoreCase("tsit")) {
+            if (sender instanceof Player && sender.hasPermission("titonplus.tsit")) {
                 Player player = (Player) sender;
                 Player sittingPlayer = null;
 
@@ -84,19 +82,5 @@ public class Main extends JavaPlugin {
             return true;
         }
         return false;
-    }
-
-    public void sprint(Player p) {
-        p.sendMessage(ChatColor.GOLD + "You feel energized from the coffee.");
-        sprintPlayers.add(p);
-        final Player p2 = p;
-        getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-
-            @Override
-            public void run() {
-                sprintPlayers.remove(p2);
-                p2.sendMessage(ChatColor.GOLD + "Your caffeine boost is wearing off.");
-            }
-        }, 400L);
     }
 }
